@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html ng-app="wordalia">
+	<head>
+		<title>Hello AngularJS</title>
+		<script type="text/javascript" src="js/angular.min.js"></script>
+    	<script type="text/javascript" src="js/app.js"></script>
+	</head>
+
+	<body>
+		<div ng-controller="WDController as wdVault">
+			<p>Greeting is {{wdVault.hello}}</p>
+			<p>The ID is {{wdVault.wd.WORD}}</p>
+			<p>The content is {{wdVault.wd.DEFINITION}}</p>
+			<p>The examples are {{wdVault.wd.EXAMPLES}}</p>			
+		</div>
+	</body>
+</html>
