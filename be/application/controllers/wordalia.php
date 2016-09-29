@@ -43,7 +43,7 @@ class Wordalia extends REST_Controller
 		}
     }
 	
-	function new_word_get(){ //TODO: Change to POST
+	function new_word_post(){ //TODO: Change to POST
         $word = $this->word_model->getByDate($date = date('Y-m-d'));
 		if (!isset($word)){ //Continue only if today's word is not set
 			//1. Get the first word randomly (non-deterministic)
