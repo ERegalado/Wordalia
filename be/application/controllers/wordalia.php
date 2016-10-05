@@ -44,13 +44,13 @@ class Wordalia extends REST_Controller
     }
 	
 	function new_word_post(){ //TODO: Change to POST
-        $word = $this->word_model->getByDate($date = date('Y-m-d'));
+        $word = $this->word_model->getByDate($date = date('Y-m-d H:i:s'));
 		if (!isset($word)){ //Continue only if today's word is not set
 			//1. Get the first word randomly (non-deterministic)
 			$word = $this->word_model->getByDate(null);
 			if ($word){
 				//2. Update the word in the DB
-				$data = array('date_published' => $date);
+				$data = array('date_published' => $date,'modified_by' => 'wd_job', 'modification_date' => $date);
 				$this->word_model->update($word['word_id'],$data); //CASE SENSITIVE
 				//3. Create the image
 				$this->_createWordImage($word);
