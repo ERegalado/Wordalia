@@ -3,7 +3,7 @@
 // This can be removed if you use __autoload() in config.php OR use Modular Extensions
 require APPPATH.'/libraries/REST_Controller.php';
 
-class Wordalia extends CI_Controller
+class Wordalia extends REST_Controller
 {
 	function __construct()
     {
@@ -21,7 +21,7 @@ class Wordalia extends CI_Controller
     }
 	
 		
-	function index(){phpinfo();echo "Current time is: ".date('Y-m-d H:i:s');}
+	// function index(){phpinfo();echo "Current time is: ".date('Y-m-d H:i:s');}
     
 	    
     function word_get()
