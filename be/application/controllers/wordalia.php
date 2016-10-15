@@ -21,7 +21,7 @@ class Wordalia extends REST_Controller
     }
 	
 		
-	function index_get(){echo "Current time is: ".date('Y-m-d H:i:s')." default timezone: " . date_default_timezone_get() . "<br />";}
+	function index_get(){$this->response(['ECHO ' => "Current time is: ".date('Y-m-d H:i:s')." default timezone: " . date_default_timezone_get() . "<br />"], 200);}
     
 	    
     function word_get()
