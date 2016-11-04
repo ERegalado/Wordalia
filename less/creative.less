@@ -111,6 +111,32 @@ a.social{
 	animation-duration: 5s !important;
 }
 
+.terms{
+@media (min-width: 768px) { max-height: 600px; overflow-y: scroll;}
+background-color:white; color: black; padding: 50px;
+& p, li{text-align:justify;}
+& p.section{margin-bottom:0 !important; font-weight: bold;}
+}
+
+ol.rl{list-style-type: lower-roman;}
+
+.snic-about{
+	color: @theme-primary;
+	.sans-serif-font;
+	font-weight: 700;
+	font-size:96px;
+	text-transform: uppercase;
+	background-image: url('../img/supernova-logo-150.png');
+	padding-left:150px;				
+	background-repeat:no-repeat;
+	background-position:center left;		
+	&:hover,
+	&:focus {
+		color: darken(@theme-primary, 10%);
+		text-decoration:none;
+	}
+}
+
 // Navigation
 
 .navbar-default {
@@ -129,7 +155,7 @@ a.social{
 		background-position:center left;		
         &:hover,
         &:focus {
-            color: darken(@theme-primary, 10%);
+            color: darken(@theme-primary, 10%);			
         }
     }
     .nav {

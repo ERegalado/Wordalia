@@ -57,10 +57,10 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-left">
                     <li>
-                        <a class="page-scroll" href="#terms">T&eacute;rminos</a>
+                        <a data-toggle="modal" href="#terms">T&eacute;rminos</a>
                     </li>
 					<li>
-                        <a class="page-scroll" href="#about">Acerca</a>
+                        <a data-toggle="modal" href="#about">Acerca</a>
                     </li>                    
                 </ul>
             </div>
@@ -81,6 +81,116 @@
         </div>
     </header>
 	
+	<!-- Modal - Terms -->
+    <div class="portfolio-modal modal fade" id="terms" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+				<div class="modal-body">
+					<div class="row">						
+						<div class="col-lg-12">							
+							<h2>Terms of Service</h2><hr/>
+						</div>
+					</div>
+					<div class="row terms">
+						<div class="col-lg-12">
+							<p>Welcome to Wordalia. This document describes the terms of service ("Terms") for Wordalia (the "Service"). By using the service in any of its platforms: Mobile Application ("Application") or Website ("Internet-based Service"), you agree to the following Terms.</p>
+							<p class="section">1. Privacy</p>
+							<p>
+								Your privacy is very important to us. We collect some information for statistical purposes. This information includes: Your browser, your configured language and the place from which you are connecting to the internet. No Personally Identifiable Information (PPI) is collected. 	
+							</p>
+							<p class="section">2. Code of Conduct</p>
+							<p>														
+								By making use of the Service, you agree to the following code of conduct:
+							</p>
+								<ol>
+									<li>Do not try to do anything illegal.</li>
+									<li>Do not use false information in your account and do not share false information.</li>
+									<li>Do not engage in activity that violates the privacy or data protection rights of others.</li>
+									<li>Do not help others break these rules.</li>
+								</ol>
+							<p>
+								If you violate these Terms, we may; at our own discretion, block you from the use of the Service.
+							</p>
+							<p class="section">3. Software License</p>
+							<p>											
+								This license gives you right to:
+							</p>							
+								<ol class="rl">
+									<li>Browse the site periodically and make use of the contents displayed on it.</li>
+									<li>Share the contents of the site and re-use them for non-commercial purposes.</li>
+								</ol>
+							<p>
+							This license does not give you the right to:
+							</p>
+								
+								<ol class="rl">
+									<li>circumvent or bypass any technological protection measures in or relating to the software or Service;</li>
+									<li>disassemble, decompile, decrypt, hack, emulate, exploit, or reverse engineer the Application or the Internet-based Service;</li>
+									<li>publish, copy, rent, lease, sell, export, import, distribute, or lend the Application;</li>
+									<li>use the Service in any unauthorized way that could interfere with anyone else’s use of them or gain access to any data;</li>
+									<li>enable access to the Service, including the Internet-based Service by unauthorized third-party applications, unless a written permission to do so has been issued.</li>									
+								</ol>															
+							<p class="section">4. Service Availability</p>
+							<p>										
+								The Service might be unavailable from time to time. Our Internet-based Service might suffer occasional disruptions and outages, and Supernova is not liable for any disruption or loss you may suffer as a result.
+							</p>
+							<p class="section">5. Content</p>
+							<p>
+								The correct and accurate definition of the words and their usage is of extremely importance to us. To ensure this, we use the definitions from "Merriam-Webster" Dictionary. The examples are taken from real-life conversation, documentaries and/or personal experiences of the authors. However, from time to time, there might be a possibility of unintentional errors. You acknowledge that such information and materials may contain inaccuracies or errors and we expressly exclude liability for any such inaccuracies or errors to the fullest extent permitted by law.
+							</p>
+							<p>							
+								<b>DISCLAIMER:</b> Supernova IC and Merriam-Webster Dictionary are by no means related. Merriam-Webster does not endorse Wordalia. The content from Merriam-Webster is used in accordance with the Terms of Use available <a href="http://www.merriam-webster.com/terms-of-use" target="_blank">here</a>
+							</p>
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+    </div>
+	
+	<!-- Modal - About -->
+    <div class="portfolio-modal modal fade" id="about" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+				<div class="modal-body">
+					<div class="row">						
+						<div class="col-lg-12">							
+							<h2>About</h2><hr/>
+						</div>
+					</div>
+					<div class="row">						
+						<div class="col-lg-12">
+							<p class="text-justify">Wordalia was born with the sole purpose of helping people learn English. The intellectual author of the idea is a salvadorian who taught english in a public school, as a volunteer educator. This experience left an indelible mark on him and the desire to help others.</p>
+							<p class="text-justify">
+							Currently, Wordalia is developed and mantained by Supernova IC.
+							</p>
+							<p class="text-justify">All rights reserved. 2016</p>							
+						</div>
+					</div>
+					<div class="row">						
+						<div class="col-lg-12">												
+							<a class="snic-about page-scroll" href="http://snlab.azurewebsites.net" target="_blank">
+								Supernova IC
+							</a>
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+    </div>
+	
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
 
@@ -97,6 +207,7 @@
 	
 	<script type="text/javascript" src="js/angular.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/ga.js"></script>
 	
 	<!-- jQuery Counter -->
 	<!-- <script src="js/waypoints.min.js"></script> 
