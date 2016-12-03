@@ -40,9 +40,10 @@ class Word_model extends CI_Model {
 		// LEFT JOIN wd_translations tr on w.word_id = tr.word_id
 		// where tr.lang_id_to = 2 LIMIT 1";
 		// return $this->db->get_where('words', array('date_published' => $date, 'is_active' => 1 ))->row_array();		
-	$this->db->select('wd_words.word_id,word, definition,examples,word_translation');
+	$this->db->select('wd_words.word_id,word, definition,examples,word_translation,word_type');
 	$this->db->join('wd_translations', 'wd_translations.word_id = wd_words.word_id', 'left');
-	$this->db->where(array('date_published' => $date, 'is_active' => 1,'lang_id_to' => 2 ));	
+	$this->db->join('wd_word_types', 'wd_word_types.word_type_id = wd_words.word_type_id and wd_word_types.is_active = 1', 'left');
+	$this->db->where(array('date_published' => $date, 'wd_words.is_active' => 1,'lang_id_to' => 2 ));	
 	return $this->db->get('words')->row_array();
   }
   

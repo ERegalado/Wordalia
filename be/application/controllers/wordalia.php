@@ -39,11 +39,11 @@ class Wordalia extends REST_Controller
 			else $this->response(array('error' => 'Word not found'), 404); //OK, At least we tried it.
         }*/
 		else{
-			$this->response(array('error' => 'Word not found'), 404); //OK, At least we tried it.
+			$this->response(array('error' => 'Word not found' /*,'query' => $this->db->last_query() */), 404); //OK, At least we tried it.
 		}
     }
 	
-	function new_word_post(){ //TODO: Change to POST
+	function new_word_post(){ 
         $word = $this->word_model->getByDate($date = date('Y-m-d H:i:s'));
 		if (!isset($word)){ //Continue only if today's word is not set
 			//1. Get the first word randomly (non-deterministic)
@@ -69,21 +69,28 @@ class Wordalia extends REST_Controller
 
 		$text_color = imagecolorallocate($img, 255, 255, 255);
 		$colorGray = imagecolorallocate($img, 185, 185, 185);
+		$wdTypeColor = imagecolorallocate($img, 204, 235, 255);
 		$font = 'res/fonts/BebasNeue Regular.otf';
 		$font2 = 'res/fonts/arial.ttf';
+		$ariali = 'res/fonts/ariali.ttf';
 		define('MAX_CHAR_PER_LINE',73);
 		define('MAX_CHAR_PER_LINE_EX',64);
 		$titleSize = 72;
-		$textSize = 24;
+		$wdTypeSize = 16;
+		$textSize = 24;		
 		$exOffset = 22;
 		$trOffset = 50;
 		$titlePos = array('x' => 84, 'y' => 160);
+		$wdTypePos = array('x' => 84, 'y' => 260 );
 		$defPos = array('x' => 84, 'y' => 268);		
 		$exPos = array('x' => 220, 'y' => $defPos['y'] +$exOffset);
 		$trPos = array('x' => 395, 'y' => $exPos['y'] +$trOffset);
 		
-		//1. Write the title
+		//1. Write the title and the type of the word
+		//1.1 Write the title 
 		imagettftext($img, $titleSize, 0, $titlePos['x'], $titlePos['y'], $text_color, $font, $word['word']);
+		//1.2 Write the type of the word
+		imagettftext($img, $wdTypeSize, 0, $wdTypePos['x'], $wdTypePos['y'], $wdTypeColor, $ariali, $word['word_type']);
 		// imagettftext($img, $titleSize, 0, $titlePos['x'], $titlePos['y'], $text_color, $font, 'PURPORT');
 		//2. Write the lines of the definition
 		$lines = [];		
