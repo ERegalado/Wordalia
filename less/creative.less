@@ -70,7 +70,7 @@ aside {
 
 .bg-dark {
     background-color: @theme-dark;
-	background-image: url('../img/bg.jpg');
+	background-image: url('../img/march-boqueron.jpg');
 	background-repeat:repeat;
     color: @fore-color;
 }
@@ -138,6 +138,11 @@ ol.rl{list-style-type: lower-roman;}
 }
 
 .wd-logo{padding-top:5px; position:relative; z-index:999;}
+.word-type{font-style: italic;color:#585b5c;}
+.carousel-inner{
+	@media (min-width: 768px) { height:740px; overflow-y:hidden;}
+	height:380px; overflow-y:hidden;
+}
 
 // Navigation
 
@@ -167,7 +172,6 @@ ol.rl{list-style-type: lower-roman;}
                 text-transform: uppercase;
                 font-weight: 700;
                 font-size: 13px;
-                /* color: @theme-dark; */
 				color: darken(@theme-primary, 30%);
                 &:hover {
                     color: @theme-primary;
@@ -239,7 +243,8 @@ ol.rl{list-style-type: lower-roman;}
 	    box-shadow: none;
 	    border: none;
 	    min-height: 100%;
-	    padding: 100px 0;
+	    /* padding: 100px 0; */
+	    padding:0;
 	    text-align: center;
 		color: @fore-color;
 		h2 {
@@ -265,8 +270,8 @@ ol.rl{list-style-type: lower-roman;}
 	}
     .close-modal {
         position: absolute;
-        width:75px;
-        height:75px;
+        width:25px;
+        height:25px;
         background-color:transparent;
         top: 25px;
         right: 25px;
@@ -275,9 +280,9 @@ ol.rl{list-style-type: lower-roman;}
             opacity: 0.3;
         }
         .lr {
-            height:75px;
+            height:25px;
             width:1px;
-            margin-left:35px;
+            /* margin-left:35px; */
             background-color:@fore-color-2;
             transform: rotate(45deg);
             -ms-transform: rotate(45deg);
@@ -286,7 +291,7 @@ ol.rl{list-style-type: lower-roman;}
             /* Safari and Chrome */
             z-index:1051;
             .rl {
-                height:75px;
+                height:25px;
                 width:1px;
                 background-color:@fore-color-2;
                 transform: rotate(90deg);
@@ -315,7 +320,7 @@ section{background-color:@theme-dark;}
 	background-attachment:fixed;
     text-align: justify;
     color: @fore-color;
-	&.bg-1{background-image: url('../img/bgs/bg-1.jpg');background-position:top;}
+	&.bg-1{background-image: url('../img/bgs/march-boqueron.jpg');background-position:top;}
 	&.bg-2{background-image: url('../img/bgs/bg-5.jpg');}
 	&.bg-3{background-image: url('../img/bgs/bg-10.jpg');background-position:top; }
 	&.bg-4{background-image: url('../img/bgs/bg-6.jpg');}	
@@ -366,7 +371,7 @@ section{background-color:@theme-dark;}
         }
     }
 	@media (orientation : portrait) {
-		&.bg-1{background-image: url('../img/bgs/bg-1-portrait.jpg');background-position:top;}
+		&.bg-1{background-image: url('../img/bgs/march-boqueron-portrait.jpg');background-position:top;}
 	}
 }
 
