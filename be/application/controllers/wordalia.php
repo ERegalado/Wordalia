@@ -26,19 +26,12 @@ class Wordalia extends REST_Controller
 	    
     function word_get()
     {
-		$date = (!$this->get('date'))?date('Y-m-d'):$this->get('date');       		
+		$date = (!$this->get('pDate'))?date('Y-m-d'):$this->get('pDate');       		
         $word = $this->word_model->getByDate($date);
     	
         if($word){
-			$this->response(['word' => $word /*,'query' => $this->db->last_query() */], 200); // 200 being the HTTP response code			
-        }/* I'll leave this task for the job
-        else if ($date == date('Y-m-d')){ 
-			$this->new_word_get();
-			$word = $this->word_model->getByDate($date);
-			if ($word)$this->response(['word' => $word], 200);
-			else $this->response(array('error' => 'Word not found'), 404); //OK, At least we tried it.
-        }*/
-		else{
+			$this->response(['word' => $word, 'gPDate' => $this->get('pDate') /*,'query' => $this->db->last_query() */], 200); // 200 being the HTTP response code			
+        }else{
 			$this->response(array('error' => 'Word not found' /*,'query' => $this->db->last_query() */), 404); //OK, At least we tried it.
 		}
     }
@@ -65,7 +58,7 @@ class Wordalia extends REST_Controller
 	function _createWordImage($word){
 		header('Content-Type: image/jpeg');
 
-		$img = $this->_LoadJpeg('res/imgs/template.jpg');
+		$img = $this->_LoadJpeg('res/imgs/templates/template-'.date('Y-m').'.jpg');
 
 		$text_color = imagecolorallocate($img, 255, 255, 255);
 		$colorGray = imagecolorallocate($img, 185, 185, 185);
