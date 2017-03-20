@@ -1,9 +1,12 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-/* load the header */
+//Load the header
 $this->load->view('template/header');
 
+//Load the mainView
 $this->load->view($mainView);
 
-/* load the footer */
+//Load the footer
 $this->load->view('template/footer');
+
+?>

@@ -19,6 +19,16 @@ class Word_model extends CI_Model {
 	return $this->db->insert_id();
   }
   
+   /*--------------------------------------------------------------------------*/
+  /*  addTranslation ==> Inserts the translation of a word		 	 			*/
+  /*  $data : Array containing the info of the point							*/
+  /*																			*/
+  /*--------------------------------------------------------------------------*/
+  function addTranslation($data){
+	$this->db->insert('translations',$data);
+	return $this->db->insert_id();
+  }
+  
   /*--------------------------------------------------------------------------*/
   /*  update ==> Updates a word		 	 										*/
   /*  $data : Array containing the info of the word							*/
@@ -56,6 +66,23 @@ class Word_model extends CI_Model {
 	return $this->db->get_where('words', array('date_published' => null, 'is_active' => 1 ))->row_array();
   }
   
+  /*-----------------------------------------------------------------------------*/
+  /*  getWords ==> Gets all the words											 */
+  /*-----------------------------------------------------------------------------*/
+  function getWordsByLang(){
+	  $sql = "select wd.*,tr.WORD_TRANSLATION from wd_words wd, wd_translations tr
+		where wd.word_id = tr.word_id
+		and tr.lang_id_to = 2
+		and wd.is_active=1"; //By now let's default to spanish (tr.lang_id_to = 2)
+		return $this->db->query($sql)->result_array();
+	}
   
+  /*-----------------------------------------------------------------------------*/
+  /*  getWord ==> Gets the word matching the parameter							 */
+  /*  $word : String containing the word							 			 */
+  /*-----------------------------------------------------------------------------*/
+  function getWord($word){	
+	return $this->db->get_where('words', array('word' => $word, 'is_active' => 1 ))->row_array();
+  }
   
 }
