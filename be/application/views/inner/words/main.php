@@ -10,10 +10,10 @@
 	);
 ?>
 
-<?php if ($this->session->userdata(Level)==0){
+<?php /*if ($this->session->userdata(Level)==0){
 	echo anchor(base_url('index.php/administrar/ubicaciones/agregar'),'Agregar Nueva Ubicaci&oacute;n','class="btn btn-primary"');
 	echo anchor(base_url('index.php/administrar/ubicaciones/cargar'),'Cargar Promocionales/Canjeables','class="btn btn-primary"');
-}  ?>
+}*/  ?>
 
 <br/>
 <br/>

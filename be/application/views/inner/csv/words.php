@@ -1,5 +1,5 @@
 <div class="jumbotron" style="padding-top:30px;">
-<h1>Words - Bulk Load</h1>
+<h1>Words</h1>
 <p>Automatically look for the definition, word type and translation of the words.</p>
 
 <?php if(isset($error)): ?>
@@ -21,11 +21,11 @@
 	echo printForm(
 		array('post'),
 		array('index.php/csv/words',true),
-		array('Archivo'),
+		array('File'),
 		array(
 			array('name'=> 'wd_words','type'=> 'file','attrs'=> 'accept=".csv"','required'=> 'required' ),
 		),
-		array('name'=> 'u1','value'=> 'Cargar','attrs'=> 'id="u1" class="btn btn-primary"')
+		array('name'=> 'u1','value'=> 'Load','attrs'=> 'id="u1" class="btn btn-primary"')
 	);
 ?>
 <!--p>Descargar formato de ejemplo <?php echo anchor(base_url('resources/formats/staff_employees_format.csv'),'Aqu&iacute;'); ?></p-->

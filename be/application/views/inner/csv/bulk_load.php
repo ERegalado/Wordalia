@@ -21,7 +21,7 @@
 	echo printForm(
 		array('post'),
 		array('index.php/csv/bulk_load',true),
-		array('Archivo'),
+		array('File'),
 		array(
 			array('name'=> 'wd_load','type'=> 'file','attrs'=> 'accept=".csv"','required'=> 'required' ),
 		),
