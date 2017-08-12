@@ -2,9 +2,10 @@
 
 class Csv extends CI_Controller {
 	
+	
 	function __construct(){
 		parent::__construct();
-		if ($this->session->userdata('Credentials')!=Credentials || $this->session->userdata(Level)!=0) redirect('index.php/admin/logout');
+		if ($this->session->userdata('Credentials')!=Credentials || $this->session->userdata(Level)!=0) redirect('index.php/admin/logout');		
 	}	
 		
 	public function words()
@@ -90,11 +91,12 @@ class Csv extends CI_Controller {
 				$data['error'] = $this->upload->display_errors();
 			}
 			else
-			{
-				$this->load->library('csvreader');
+			{				
 				$fileInfo = $this->upload->data();
-				$result =   $this->csvreader->parse_file($fileInfo['full_path']);							
-				if($this->_insert_csv($result)):	
+				$this->load->library('parseCSV');
+				$csv = new parseCSV();
+				$csv->auto($fileInfo['full_path']);
+				if($this->_insert_csv($csv)):	
 					$this->session->set_flashdata('msg', 'Successfully loaded the words to the DB.');
 					//redirect('index.php/csv/bulk_load');
 				else: 
@@ -108,7 +110,7 @@ class Csv extends CI_Controller {
         $this->load->view('template/wrapper', $data);  
 	}
 	
-	function _insert_csv($csvResult){
+	function _insert_csv($csv){
 		$data = array();
 		$i=0;
 		$this->load->model('word_model');
@@ -118,10 +120,9 @@ class Csv extends CI_Controller {
 		foreach($wTypes as $wType){
 			$wordTypes[$wType['WORD_TYPE_ID']] = strtoupper($wType['WORD_TYPE']);
 		}
-
-		if (array_key_exists('WORD_TYPE_ID',$csvResult[0]) and array_key_exists('WORD',$csvResult[0]) and array_key_exists('DEFINITION',$csvResult[0]) and array_key_exists('EXAMPLES',$csvResult[0]) and array_key_exists('WORD_TRANSLATION',$csvResult[0])):
+		if (in_array('WORD_TYPE_ID',$csv->titles) and in_array('WORD',$csv->titles) and in_array('DEFINITION',$csv->titles) and in_array('EXAMPLES',$csv->titles) and in_array('WORD_TRANSLATION',$csv->titles)):
 			$this->db->trans_start();
-			foreach($csvResult as $row):
+			foreach($csv->data as $row):
 				// echo 'type id '.$row['WORD_TYPE_ID'].' array'.array_search(strtoupper($row['WORD_TYPE_ID']),$wordTypes);
 				$wordInDB = $this->word_model->getWord($row['WORD']);
 				if (empty($wordInDB)):
@@ -143,7 +144,7 @@ class Csv extends CI_Controller {
 						'WORD_ID'			=> $wordId, //Must be set after the word is inserted
 						'LANG_ID_TO'		=> 2, //Default to spanish
 						'WORD_TRANSLATION'	=> $row['WORD_TRANSLATION']
-					);			
+					);
 					$this->word_model->addTranslation($dataRowTrans);
 				endif;				
 			endforeach;

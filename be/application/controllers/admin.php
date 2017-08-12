@@ -107,6 +107,7 @@ class Admin extends CI_Controller {
 	}
 	
 	public function home(){
+		if ($this->session->userdata('Credentials')!=Credentials || $this->session->userdata(Level)!=0) redirect('index.php/admin');
 		$this->load->model('word_model');
 		$this->load->helper('js');
 		$data = array(
