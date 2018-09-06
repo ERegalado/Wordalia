@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-
+//Local URL: http://localhost/wordalia/be/index.php/wordalia/word_get
 // This can be removed if you use __autoload() in config.php OR use Modular Extensions
 require APPPATH.'/libraries/REST_Controller.php';
 
@@ -21,11 +21,11 @@ class Wordalia extends REST_Controller
     }
 	
 		
-	// function index(){phpinfo();echo "Current time is: ".date('Y-m-d H:i:s');}
+	 function index(){echo "Current time is: ".date('Y-m-d H:i:s');}
     
 	    
     function word_get()
-    {
+    {		
 		$date = (!$this->get('pDate'))?date('Y-m-d'):$this->get('pDate');       		
         $word = $this->word_model->getByDate($date);
     	
@@ -58,7 +58,7 @@ class Wordalia extends REST_Controller
 	function _createWordImage($word){
 		header('Content-Type: image/jpeg');
 
-		$img = $this->_LoadJpeg('res/imgs/templates/template-'.date('Y-m').'.jpg');
+		$img = $this->_LoadJpeg('res/imgs/templates/template-'.date('m').'.jpg');
 
 		$text_color = imagecolorallocate($img, 255, 255, 255);
 		$colorGray = imagecolorallocate($img, 185, 185, 185);

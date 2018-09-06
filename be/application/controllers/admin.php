@@ -119,141 +119,82 @@ class Admin extends CI_Controller {
 		$this->load->view('template/wrapper',$data);
 	}
 	
-	public function csv()
+	
+	
+	/*--------------------------------------------------------------------------**
+	**  load_words ==> Uploads a csv file, looks for the meaning of each word	**
+	**  in Merriam-Webster and stores the meaning in the DB						**	
+	**																			**	
+	**--------------------------------------------------------------------------*/
+	public function load_words()
 	{
-        if ($this->session->userdata('Credentials')!=Credentials || $this->session->userdata(Level)!=0) redirect('index.php/logout');
+        if ($this->session->userdata('Credentials')!=Credentials || $this->session->userdata(Level)!=0) redirect('index.php/admin/logout');
 		//If POST then the user is trying to insert a new transfer
 		if ($this->input->post()):						
-			$config['upload_path'] = './resources/uploads/';
+			$config['upload_path'] = './res/uploads/';
 			$config['allowed_types'] = 'csv';
 			$config['max_size']	= '10240';	//10MB max file		
 			$this->load->library('upload', $config);
-			$fileName = '';
-			$modelName = '';
-			//Common Values for all Loads
-			$defaultValues = array(
-				'is_active'		=> 1,
-				'creation_date' => date('Y-m-d'),
-				'created_by'	=> 0
-			);
-			//Determine which file is being uploaded
-			if ($this->input->post('u1')):
-				$fileName = 'mas_emps';
-				$modelName = 'userModel';
-				$csvConfig = array(
-					'DUI'			=> 'CODE MAS',
-					'name'			=> 'NOMBRE STAFF MAS',
-					'position'		=> 'CARGO',
-					'location_id'	=> 'CODE UBICACION',
-					'username'		=> 'USUARIO',
-					'password'		=> 'CLAVE',
-					'level'			=> 'ROL'
-				);
-				// $defaultValues ['level']	= 2;
-			elseif ($this->input->post('u2')):
-				$fileName = 'locations';
-				$modelName = 'locationModel';
-				$csvConfig = array(
-					'location_id'	=> 'CODE UBICACION',
-					'location_name'	=> 'NOMBRE UBICACION'
-				);
-				$defaultValues ['current_qty']	= 0;
-			elseif ($this->input->post('u3')): 
-				$fileName = 'ilc_emps';
-				$modelName = 'employeesModel';
-				$csvConfig = array(
-					'DUI'			=> 'CODE EMPLEADO',
-					'employee_name'	=> 'NOMBRE EMPLEADO',
-					'position'		=> 'CARGO',
-					'location_id'	=> 'CODE UBICACION'					
-				);
-				$defaultValues ['balance']	= 0;
-			endif;
+			$fileName = 'wd_words';
+			$modelName = '';	
 			if ( ! $this->upload->do_upload($fileName))
 			{
+				echo $this->upload->display_errors();
 				$data['error'] = $this->upload->display_errors();
 			}
 			else
 			{
 				$this->load->library('csvreader');
-				$fileInfo = $this->upload->data();
-				$result =   $this->csvreader->parse_file($fileInfo['full_path']);
-				if($this->_insert_csv($result,$modelName,$csvConfig,$defaultValues)):	
+				$this->load->helper('curl');
+				$this->load->helper('word_parser');
+				$fileInfo = $this->upload->data();				
+				$result =   $this->csvreader->parse_file($fileInfo['full_path']);				
+				$wordsData = array();
+				$i = 0;
+				if (array_key_exists('WORD',$result[0])):
+					foreach($result as $row):
+						$wordsData[$i++] =  parseWord($row['WORD']);
+					endforeach;
+				endif;
+				if (empty($wordsData)) $wordsData['0'] =  array('error'=>'Missing header "WORD"');
+				// var_dump($wordsData);
+				
+				//Create a downloadable CSV --------------------------------------------------------------------------------
+				//After the automatic retrieval of the information, it should always have a revision.
+				$this->load->helper('download');
+				$fp = fopen('php://output', 'w');
+
+				$name = 'data.csv';
+				// force_download($name, $data);
+				header('Content-Description: File Transfer');
+				header('Content-Type: application/csv');
+				header('Content-Disposition: attachment; filename='.$name);
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate');
+				header('Pragma: public');
+				
+				foreach ($wordsData as $fields) {
+					fputcsv($fp, $fields);
+				}
+
+				$data = file_get_contents('php://output'); // Read the file's contents
+				
+				header('Content-Length: ' . filesize($data));
+				fclose($fp);
+				
+				/*if($this->_insert_csv($result,$modelName,$csvConfig,$defaultValues)):	
 					$this->session->set_flashdata('msg', 'Carga Realizada exitosamente.');
 					redirect('index.php/cargas');
 				else: 
 					$data['error'] = 'El archivo CSV contiene errores y no pudo ser cargado.';
-				endif;				
+				endif;		*/		
 			}
+		else:
+			$data['mainView'] =  'inner/csv/words';
+			$this->load->view('template/wrapper', $data);  
 		endif;
-		
-		
-        $data['mainView'] =  'admin/uploads';
-        $this->load->view('template/wrapper', $data);  
 	}
 	
-	function _insert_csv($csvResult, $modelName, $config,$defaultValues){
-		$data = array();
-		$i=0;
-		$this->load->model($modelName);
-		$this->db->trans_start();
-		foreach($csvResult as $row):
-			$dataRow = array();
-			$rowKeys = array_keys($row);
-			while($col_name = current($config)):				
-				if (in_array($col_name,$rowKeys)) $dataRow[key($config)]= (key($config)=='password')?md5($row[$col_name]):$row[$col_name];
-				next($config);
-			endwhile;
-			reset($config);
-			//Merge Default values
-			 $dataRow = array_merge($dataRow,$defaultValues);
-			$data[$i++] = $dataRow;			
-			$this->$modelName->add($dataRow);
-		endforeach;
-		$this->db->trans_complete();		
-		if ($this->db->trans_status() === FALSE)
-		{
-			return 0;
-		} 
-		return 1;
-	}
-	
-	/*
-	public function index()
-	{
-        $this->load->library('csvreader');
-        $result =   $this->csvreader->parse_file('./resources/uploads/test.csv');
-		var_dump($result);
-        $data['csvData'] =  $result;
-        $data['mainView'] =  'admin/uploads';
-        $this->load->view('template/wrapper', $data);  
-	}*/
-	
-	public function dd()
-	{
-        $this->load->helper('download');
-		$this->load->model('locationModel');
-		$this->load->model('userModel');
-		// $list = $this->locationModel->getLocations();
-		$list = $this->userModel->getMASEmployees();
-		$fp = fopen('php://output', 'w');
-
-		foreach ($list as $fields) {
-			fputcsv($fp, $fields);
-		}
-
-		$data = file_get_contents('php://output'); // Read the file's contents
-		$name = 'data.csv';
-		// force_download($name, $data);
-		header('Content-Description: File Transfer');
-		header('Content-Type: application/csv');
-		header('Content-Disposition: attachment; filename='.$name);
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate');
-		header('Pragma: public');
-		header('Content-Length: ' . filesize($data));
-		fclose($fp);
-	}
 	
 	
 }        

@@ -20,7 +20,7 @@
 <?php 
 	echo printForm(
 		array('post'),
-		array('index.php/csv/words',true),
+		array('index.php/admin/load_words',true),
 		array('File'),
 		array(
 			array('name'=> 'wd_words','type'=> 'file','attrs'=> 'accept=".csv"','required'=> 'required' ),

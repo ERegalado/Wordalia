@@ -18,10 +18,8 @@ class CSVReader {
         while( ($row = fgetcsv($file, $this->max_row_size, $this->separator, $this->enclosure)) != false ) {            
             if( $row != null ) { // skip empty lines
                 $values =   explode(',',$row[0]);
-				print_r($values);
-				echo '<br/>';
+				// print_r($values);
                 if(count($keys) == count($values)){
-					echo 'IN';
                     $arr    =   array();
                     $new_values =   array();
                     $new_values =   $this->escape_string($values);

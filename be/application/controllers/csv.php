@@ -18,9 +18,11 @@ class Csv extends CI_Controller {
 			$config['max_size']	= '10240';	//10MB max file		
 			$this->load->library('upload', $config);
 			$fileName = 'wd_words';
-			$modelName = '';
+			$modelName = '';	
+			echo 'Upload';
 			if ( ! $this->upload->do_upload($fileName))
 			{
+				echo $this->upload->display_errors();
 				$data['error'] = $this->upload->display_errors();
 			}
 			else
@@ -28,8 +30,8 @@ class Csv extends CI_Controller {
 				$this->load->library('csvreader');
 				$this->load->helper('curl');
 				$this->load->helper('word_parser');
-				$fileInfo = $this->upload->data();
-				$result =   $this->csvreader->parse_file($fileInfo['full_path']);
+				$fileInfo = $this->upload->data();				
+				$result =   $this->csvreader->parse_file($fileInfo['full_path']);				
 				$wordsData = array();
 				$i = 0;
 				if (array_key_exists('WORD',$result[0])):

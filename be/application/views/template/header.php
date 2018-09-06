@@ -51,10 +51,11 @@
         <div class="navbar-collapse collapse" id="navbar">
           <ul class="nav navbar-nav">
             <li class="active"><?php echo anchor(base_url('index.php/admin/home'),'Home'); ?></li>
+            <!--li><?php echo anchor(base_url('index.php/admin/load_words'),'Load'); ?></li-->
             <li class="dropdown">
               <a class="dropdown-toggle" role="button" aria-expanded="false" aria-haspopup="true" href="#" data-toggle="dropdown">CSV <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><?php echo anchor(base_url('index.php/csv/words'),'Words'); ?></li>
+                <li><?php echo anchor(base_url('index.php/admin/load_words'),'Words'); ?></li>
 				<li><?php echo anchor(base_url('index.php/csv/bulk_load'),'Bulk Load'); ?></li>				
               </ul>
             </li>

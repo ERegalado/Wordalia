@@ -41,7 +41,7 @@ function CallAPI($method, $url, $data = false)
     // curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
     curl_setopt($curl, CURLOPT_VERBOSE, 1);
 	curl_setopt( $curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
-
+	curl_setopt($curl, CURLOPT_TIMEOUT_MS, 300000);
     $result = curl_exec($curl);
 	    
 	
