@@ -157,7 +157,7 @@ class Admin extends CI_Controller {
 					endforeach;
 				endif;
 				if (empty($wordsData)) $wordsData['0'] =  array('error'=>'Missing header "WORD"');
-				// var_dump($wordsData);
+				//var_dump($wordsData);
 				
 				//Create a downloadable CSV --------------------------------------------------------------------------------
 				//After the automatic retrieval of the information, it should always have a revision.

@@ -36,7 +36,7 @@ class Wordalia extends REST_Controller
 		}
     }
 	
-	function new_word_post(){ 
+	function new_word_post(){ //New word gets a new word from the database and publish it to the website and to facebook
         $word = $this->word_model->getByDate($date = date('Y-m-d H:i:s'));
 		if (!isset($word)){ //Continue only if today's word is not set
 			//1. Get the first word randomly (non-deterministic)
@@ -48,7 +48,7 @@ class Wordalia extends REST_Controller
 				//3. Create the image
 				$this->_createWordImage($word);
 				//4. Schedule FB post
-				$this->_postToFB($word['word']);
+				$this->_postToFB($word['word']); //Here the word gets posted to facebook
 				//5. Return the response
 				$this->response(['success' => 1], 200);
 			}else{$this->response(['success' => 0], 200);}
@@ -110,7 +110,7 @@ class Wordalia extends REST_Controller
 	}
 	
 	function _postToFB($wordStr){		
-		$this->load->library('FB');
+		$this->load->library('FB'); //Using the SDK for PHP
 		$this->fb->login();
 		$this->fb->postPicture('Word of the Day: '.$wordStr,FCPATH.'/res/imgs/words/'.date('Y-m-d').'.jpg');
 	}

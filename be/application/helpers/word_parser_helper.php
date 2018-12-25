@@ -13,6 +13,8 @@ function parseWord($word){
 	
 	try{
 		//1. Get the definition from the 'learners' dictionary and the translation from the 'spanish' dictionary
+		// $result1 = grab_xml_definition($word,dictionary1, dictionary1Key);		
+		// $result2 = grab_xml_definition($word,dictionary2, dictionary2Key);
 		$result1 = grab_xml_definition($word,dictionary1, dictionary1Key);
 		$result2 = grab_xml_definition($word,dictionary2, dictionary2Key);
 		$textXML = $result1;
@@ -28,12 +30,14 @@ function parseWord($word){
 			//3.1. Get the first definition	
 			$wDef1 = '';
 			$wDef2 = ''; //Initialize
-			$wDef1 = $xml->entry->def->dt;
-			if ($wDef1 == '' && isset($xml->entry->def->dt->un))$wDef1 = $xml->entry->def->dt->un;
+			$wDef1 = trim($xml->entry->def->dt);
+			if ( ($wDef1 == '' || $wDef1 == ':') && isset($xml->entry->def->dt->un))$wDef1 = $xml->entry->def->dt->un;
+			if (($wDef1 == '' || $wDef1 == ':') && isset($xml->entry->def->dt->sx))$wDef1 = $xml->entry->def->dt->sx;
 			//3.2. Attempt to get second def
 			if (count($xml->entry->def->dt)>1){		
 				$wDef2 = $xml->entry->def->dt[1];
-				if ($wDef2 == '')$wDef2 = $xml->entry->def->dt[1]->un;		
+				if (($wDef2 == '' || $wDef2 == ':') && isset($xml->entry->def->dt[1]->un))$wDef2 = $xml->entry->def->dt[1]->un;		
+				if (($wDef2 == '' || $wDef2 == ':') && isset($xml->entry->def->dt[1]->sx))$wDef2 = $xml->entry->def->dt[1]->sx;		
 			}
 			$wordArray['definition'] = ($wDef2=='')?$wDef1: $wDef1.' (2) '.$wDef2;
 			
