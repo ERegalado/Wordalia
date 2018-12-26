@@ -9,15 +9,18 @@ function parseWord($word){
 		'example'		=>	'',
 		'translation'	=>	''
 	);
-	
+	//Get MW key
+	$inputJSON = file_get_contents('fb_config.json');
+	$json = json_decode($inputJSON, true);
 	
 	try{
 		//1. Get the definition from the 'learners' dictionary and the translation from the 'spanish' dictionary
 		// $result1 = grab_xml_definition($word,dictionary1, dictionary1Key);		
-		// $result2 = grab_xml_definition($word,dictionary2, dictionary2Key);
-		$result1 = grab_xml_definition($word,dictionary1, dictionary1Key);
-		$result2 = grab_xml_definition($word,dictionary2, dictionary2Key);
+		// $result2 = grab_xml_definition($word,dictionary2, dictionary2Key);		
+		$result1 = grab_xml_definition($word,$json['MW']['dictionary1'], $json['MW']['dictionary1Key']);
+		$result2 = grab_xml_definition($word,$json['MW']['dictionary2'], $json['MW']['dictionary2Key']);
 		$textXML = $result1;
+		libxml_use_internal_errors(true); //If the XML is not valid, handle the error internally
 		$xml = simplexml_load_string($result1);
 		$transXML = simplexml_load_string($result2);
 		
@@ -52,8 +55,10 @@ function parseWord($word){
 			
 			//5. Get the translation
 			$wordArray['translation'] = ''; //Initialize
-			if (isset($transXML->entry->def->dt))$wordArray['translation'] = $transXML->entry->def->dt;
-			if (gettype($wordArray['translation'])=='object')$wordArray['translation']= $transXML->entry->def->dt->{'ref-link'};
+			if ($transXML){
+				if (isset($transXML->entry->def->dt))$wordArray['translation'] = $transXML->entry->def->dt;
+				if (gettype($wordArray['translation'])=='object')$wordArray['translation']= $transXML->entry->def->dt->{'ref-link'};
+			}			
 		endif;
 	}finally{
 		//6. Return the results
