@@ -2,3 +2,4 @@ be/res/uploads/
 be/res/imgs/words/
 be/application/config/database-azure.php
 be/application/config/database.php
+be/fb_config.json
